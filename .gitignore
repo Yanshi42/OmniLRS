@@ -22,6 +22,9 @@ assets/Terrains/SouthPole/
 .pixi/*
 !.pixi/config.toml
 
+# Local Isaac Sim 6.1 Python environment
+/.venv-isaac61/
+
 Session.vim
 results.txt
 
