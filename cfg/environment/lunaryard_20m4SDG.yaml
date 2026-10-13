@@ -248,7 +248,7 @@ terrain_manager:
 
     deformation_engine:
       enable: False
-      render_deform_inv: 10
+      delay: 2.0
       terrain_width: ${....lunaryard_settings.lab_width}
       terrain_height: ${....lunaryard_settings.lab_length}
       terrain_resolution: ${....lunaryard_settings.resolution}

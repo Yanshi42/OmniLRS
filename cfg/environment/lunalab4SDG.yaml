@@ -5,12 +5,6 @@ lunalab_settings:
   lab_length: 10.0
   lab_width: 6.5
   resolution: 0.01
-  projector_path: /Lunalab/Projector
-  projector_shader_path: /Lunalab/Looks/Light_12000K/Shader
-  room_lights_path: /Lunalab/CeilingLights
-  curtains_path:
-    extended: /Lunalab/Lab/CurtainExtended
-    folded: /Lunalab/Lab/CurtainFolded
 
 # Rocks sampling parameters.
 rocks_settings:
@@ -112,7 +106,7 @@ terrain_manager:
 
     deformation_engine:
       enable: False
-      render_deform_inv: 10
+      delay: 2.0
       terrain_width: ${....lunalab_settings.lab_width}
       terrain_height: ${....lunalab_settings.lab_length}
       terrain_resolution: ${....lunalab_settings.resolution}

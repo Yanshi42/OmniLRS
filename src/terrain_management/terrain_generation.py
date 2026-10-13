@@ -73,6 +73,17 @@ class CraterGenerator:
         with open(self._profiles_path, "rb") as handle:
             self._profiles = pickle.load(handle)
 
+        from scipy._lib._array_api import array_namespace
+
+        for index, profile_old in enumerate(self._profiles):
+            profile_new = CubicSpline.__new__(CubicSpline)
+            profile_new._x = profile_old._x
+            profile_new._c = profile_old._c
+            profile_new._asarray = array_namespace(profile_new._c, profile_new._x).asarray
+            profile_new.axis = getattr(profile_old, "axis", 0)
+            profile_new.extrapolate = getattr(profile_old, "extrapolate", True)
+            self._profiles[index] = profile_new
+
     def sat_gaussian(self, x: np.ndarray, mu1: float, mu2: float, std: float) -> np.ndarray:
         """
         Saturates a gaussian function to its maximum between mu1 and mu2 with a standard deviation of std.
