@@ -14,6 +14,7 @@ dependencies = [
     "zfpy",
     "warp-lang",
     "numba",
+    "numpy-quaternion",
     "gdown",
     "gdal",
     "omegaconf",
