@@ -84,6 +84,11 @@ class RendererConf:
     subdiv_refinement_level: int = dataclasses.field(default_factory=int)
     renderer: str = dataclasses.field(default_factory=str)
     headless: bool = dataclasses.field(default_factory=bool)
+    active_gpu: int | None = None
+    active_cuda_gpus: list[int] = dataclasses.field(default_factory=lambda: [0])
+    multi_gpu: bool = False
+    max_gpu_count: int = 1
+    physics_gpu: int = 0
 
     def __post_init__(self):
         assert type(self.samples_per_pixel_per_frame) is int, "samples_per_pixel_per_frame must be an integer"
@@ -95,12 +100,20 @@ class RendererConf:
         assert type(self.subdiv_refinement_level) is int, "subdiv_refinement_level must be an integer"
         assert type(self.headless) is bool, "headless must be a boolean"
         assert type(self.renderer) is str, "renderer must be a string"
+        assert self.active_gpu is None or type(self.active_gpu) is int, "active_gpu must be an integer or null"
+        assert type(self.active_cuda_gpus) is list, "active_cuda_gpus must be a list"
+        assert all(type(i) is int for i in self.active_cuda_gpus), "active_cuda_gpus must contain integers"
+        assert type(self.multi_gpu) is bool, "multi_gpu must be a boolean"
+        assert type(self.max_gpu_count) is int, "max_gpu_count must be an integer"
+        assert type(self.physics_gpu) is int, "physics_gpu must be an integer"
 
         assert self.samples_per_pixel_per_frame > 0, "samples_per_pixel_per_frame must be greater than 0"
         assert self.max_bounces > 0, "max_bounces must be greater than 0"
         assert self.max_specular_transmission_bounces > 0, "max_specular_transmission_bounces must be greater than 0"
         assert self.max_volume_bounces > 0, "max_volume_bounces must be greater than 0"
         assert self.subdiv_refinement_level >= 0, "subdiv_refinement_level must be greater or equal to 0"
+        assert self.max_gpu_count > 0, "max_gpu_count must be greater than 0"
+        assert self.physics_gpu >= 0, "physics_gpu must be greater or equal to 0"
         assert self.renderer in [
             "PathTracing",
             "RayTracedLighting",
