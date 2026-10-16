@@ -89,6 +89,7 @@ class RendererConf:
     multi_gpu: bool = False
     max_gpu_count: int = 1
     physics_gpu: int = 0
+    portable_root: str | None = None
 
     def __post_init__(self):
         assert type(self.samples_per_pixel_per_frame) is int, "samples_per_pixel_per_frame must be an integer"
@@ -106,6 +107,7 @@ class RendererConf:
         assert type(self.multi_gpu) is bool, "multi_gpu must be a boolean"
         assert type(self.max_gpu_count) is int, "max_gpu_count must be an integer"
         assert type(self.physics_gpu) is int, "physics_gpu must be an integer"
+        assert self.portable_root is None or type(self.portable_root) is str, "portable_root must be a string or null"
 
         assert self.samples_per_pixel_per_frame > 0, "samples_per_pixel_per_frame must be greater than 0"
         assert self.max_bounces > 0, "max_bounces must be greater than 0"
@@ -114,6 +116,7 @@ class RendererConf:
         assert self.subdiv_refinement_level >= 0, "subdiv_refinement_level must be greater or equal to 0"
         assert self.max_gpu_count > 0, "max_gpu_count must be greater than 0"
         assert self.physics_gpu >= 0, "physics_gpu must be greater or equal to 0"
+        assert self.portable_root is None or self.portable_root, "portable_root must not be empty"
         assert self.renderer in [
             "PathTracing",
             "RayTracedLighting",

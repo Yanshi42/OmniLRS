@@ -25,6 +25,9 @@ assets/Terrains/SouthPole/
 # Local Isaac Sim 6.1 Python environment
 /.venv-isaac61/
 
+# Local Isaac Sim runtime caches (shader, Kit, logs)
+/.cache/
+
 Session.vim
 results.txt
 

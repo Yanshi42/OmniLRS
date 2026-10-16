@@ -6,12 +6,9 @@ authors = [
 ]
 channels = ["conda-forge"]
 name = "OmniLRS"
-platforms = ["linux-64"]
+platforms = [{ name = "linux-64-glibc-2-35", platform = "linux-64", glibc = "2.35" }]
 version = "0.1.0"
 description = "Pixi environments for OmniLRS with Isaac Sim 6.1 and manager-specific features"
-
-[system-requirements]
-libc = { family = "glibc", version = "2.35" }
 
 [tasks]
 dedup-envs = "rdfind -makehardlinks true .pixi/envs"
@@ -34,7 +31,9 @@ omegaconf = "*"
 hydra-core = "*"
 skyfield = "*"
 zfpy = "*"
-numba = "*"
+numba = "==0.63.1"
+coverage = "==7.16.2"
+numpy-quaternion = "==2024.0.13"
 gdown = "*"
 em = "*"
 lark = "*"
@@ -43,14 +42,18 @@ OmniLRS = { path = ".", editable = true }
 
 [feature.core.activation.env]
 OMNILRS_ROOT = "${PIXI_PROJECT_ROOT}"
+OMNILRS_KIT_ROOT = "${PIXI_PROJECT_ROOT}/.cache/isaacsim"
 LD_LIBRARY_PATH = "$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
 
 # isaacsim-specific deps, tasks, env variables in feature "isaac"
 [feature.isaac.dependencies]
-packaging = "==23.0"
+packaging = "==26.0"
 numpy = "==2.3.1"
 
 [feature.isaac.pypi-dependencies]
+# Isaac Sim 6.1 pins this release candidate; listing it directly allows
+# Pixi's PyPI resolver to admit the pre-release version.
+tinyobjloader = "==2.0.0rc13"
 isaacsim = { version = "==6.1.0.0", extras = ["all", "extscache"] }
 
 [feature.isaac.activation.env]
@@ -88,8 +91,15 @@ pytest = "*"
 test-ros2 = "pytest -v -s test/test_ros2_sanity.py"
 
 [environments]
-default = { features = ["core", "isaac"] }
 yamcs = { features = ["core", "isaac", "yamcs"] }
 ros2 = { features = ["core", "isaac", "ros2"] }
 test-sim = { features = ["test-sim"] }
 ci = { features = ["core", "isaac", "ros2", "yamcs"] }
+
+[environments.default]
+features = ["core", "isaac"]
+
+[environments.default.pypi-dependencies]
+gymnasium = ">=1.4.0, <2"
+matplotlib = ">=3.10.8, <4"
+pytest = ">=9.1.1, <10"

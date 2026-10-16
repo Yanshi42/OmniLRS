@@ -6,6 +6,7 @@ renderer:
   multi_gpu: False
   max_gpu_count: 1
   physics_gpu: 0
+  portable_root: ${oc.env:OMNILRS_KIT_ROOT,.cache/isaacsim}
   samples_per_pixel_per_frame: 32
   max_bounces: 6
   max_specular_transmission_bounces: 6

@@ -19,6 +19,8 @@ dependencies = [
     "gdal",
     "omegaconf",
     "hydra-core",
+    "gymnasium",
+    "matplotlib",
     "opencv-python",
 ]
 

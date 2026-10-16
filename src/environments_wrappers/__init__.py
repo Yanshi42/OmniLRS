@@ -4,6 +4,8 @@ __email__ = "ljburtz@jaops.com"
 
 
 def startSim(cfg: dict):
+    import os
+
     from isaacsim import SimulationApp
 
     class SimulationApp_wait(SimulationApp):
@@ -83,7 +85,11 @@ def startSim(cfg: dict):
 
     # Starts the simulation and allows to import things related to Isaac and PXR
     renderer_cfg = cfg["rendering"]["renderer"]
-    simulation_app = SimulationApp_wait(renderer_cfg.__dict__)
+    launch_config = renderer_cfg.__dict__.copy()
+    portable_root = launch_config.pop("portable_root", None)
+    if portable_root:
+        launch_config["extra_args"] = ["--portable-root", os.path.abspath(os.path.expanduser(portable_root))]
+    simulation_app = SimulationApp_wait(launch_config)
     from src.environments.rendering import set_chromatic_aberrations, set_lens_flares, set_motion_blur
     set_lens_flares(cfg)
     set_motion_blur(cfg)
