@@ -1,0 +1,34 @@
+prim_path: /Robots/husky
+usd_path: assets/USD_Assets/robots/nograph_husky.usd
+left_drive_joints:
+  - front_left_wheel
+  - rear_left_wheel
+right_drive_joints:
+  - front_right_wheel
+  - rear_right_wheel
+joint_velocity_signs:
+  front_left_wheel: 1.0
+  rear_left_wheel: 1.0
+  front_right_wheel: 1.0
+  rear_right_wheel: 1.0
+wheel_radius_m: 0.17775
+wheel_track_m: 0.57080
+wheel_speed_limit_rad_s: 7.0
+contact_links:
+  - base_footprint
+  - base_link
+  - front_bumper_link
+  - front_left_wheel_link
+  - front_right_wheel_link
+  - imu_link
+  - rear_bumper_link
+  - rear_left_wheel_link
+  - rear_right_wheel_link
+  - top_plate_link
+  - user_rail_link
+  - d455/RSD455
+allowed_ground_contact_links:
+  - front_left_wheel_link
+  - rear_left_wheel_link
+  - front_right_wheel_link
+  - rear_right_wheel_link
